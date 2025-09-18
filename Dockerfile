@@ -1,6 +1,6 @@
 # Primera fase: Construcción
-# Usa una imagen oficial de Maven que incluye OpenJDK 21
-FROM maven:3.9.6-openjdk-21 AS build
+# Usa una imagen oficial de Maven que incluye Eclipse Temurin OpenJDK 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
 # Establece el directorio de trabajo
 WORKDIR /app
