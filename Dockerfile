@@ -1,5 +1,6 @@
-# Primera fase: construcción
-FROM openjdk:21-jdk-slim AS build
+# Primera fase: Construcción
+# Usa una imagen oficial de Maven que incluye OpenJDK 21
+FROM maven:3.9.6-openjdk-21 AS build
 
 # Establece el directorio de trabajo
 WORKDIR /app
@@ -11,16 +12,16 @@ COPY src ./src
 # Compila el proyecto y genera el JAR
 RUN --mount=type=cache,target=/root/.m2 mvn clean package -DskipTests
 
-# Segunda fase: ejecución
+# Segunda fase: Ejecución
 FROM openjdk:21-jdk-slim
 
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el JAR generado en la fase de construcción
+# Copia el JAR generado de la fase de construcción a la imagen final
 COPY --from=build /app/target/eurekaServer-0.0.1-SNAPSHOT.jar eurekaServer.jar
 
-# Expone el puerto
+# Expone el puerto de la aplicación
 EXPOSE 8761
 
 # Comando para ejecutar la aplicación
